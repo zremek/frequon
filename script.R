@@ -6,4 +6,4 @@ help(frequon)
 (pistoale <- BetaBit::pistoale)
 (roses <- BetaBit::roses)
 
-frequon(subject = "Re: Interested?", content = "")
+frequon(subject = "Re: Interested?", content = roses)
