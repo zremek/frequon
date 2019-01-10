@@ -44,6 +44,19 @@ join %>%
 join %>% mutate(diff_pct = cipher_letter_pct - eng_letter_pct) %>% 
   ggplot(aes(x = letter, y = diff_pct, fill = diff_pct > 0)) + geom_col()
 
-par(mfrow = c(1,2))
-join %>% ggplot() + 
-  geom_point(aes(x = letter, y = eng_letter_pct), colour = "blue", size = 4)
+install.packages("ggpubr")
+library(ggpubr)
+eng_order <- join %>% ggplot() + 
+  geom_point(aes(x = fct_reorder(.f = letter, .x = eng_letter_pct),
+                 y = eng_letter_pct), colour = "blue", size = 4) +
+  coord_flip()
+cipher_order <- join %>% ggplot() + 
+  geom_point(aes(x = fct_reorder(.f = letter, .x = cipher_letter_pct),
+                 y = cipher_letter_pct), colour = "red", size = 4) +
+  coord_flip()
+ggarrange(eng_order, cipher_order, nrow = 1, ncol = 2)
+
+(roses_translation <- chartr(old = "peszlydctwoqfxharnjmgvibuk", 
+                             new = "etaoinshrdlcumwfgypbvkjxqz",
+                             x = tolower(roses)))
+frequon(subject = "Re: Transcription", content = roses_translation)
