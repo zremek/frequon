@@ -25,4 +25,25 @@ frequon(subject = "Re: Frequencies", content = freq)
 elf <- data.frame(BetaBit::EnglishLetterFrequency)
 roses_split <- roses_split %>% 
   filter(roses_split %in% letters) %>% 
-  mutate(letter_pct = Freq / sum(Freq) * 100)
+  mutate(letter_pct = Freq / sum(Freq) * 100) %>% 
+  rename(letter = roses_split)
+
+elf <- elf %>% mutate(letter = rownames(elf)) %>% 
+  arrange(letter)
+
+join <- left_join(elf, roses_split, by = "letter") %>% 
+  rename(eng_letter_pct = BetaBit..EnglishLetterFrequency,
+         cipher_letter_pct = letter_pct) 
+join %>% 
+  ggplot() + 
+  geom_point(aes(x = letter, y = eng_letter_pct, shape = eng_letter_pct == 0), 
+                        colour = "blue", size = 4, alpha = 1/3) +
+  geom_point(aes(x = letter, y = cipher_letter_pct, shape = cipher_letter_pct == 0),
+             colour = "red", size = 4, alpha = 1/3)
+
+join %>% mutate(diff_pct = cipher_letter_pct - eng_letter_pct) %>% 
+  ggplot(aes(x = letter, y = diff_pct, fill = diff_pct > 0)) + geom_col()
+
+par(mfrow = c(1,2))
+join %>% ggplot() + 
+  geom_point(aes(x = letter, y = eng_letter_pct), colour = "blue", size = 4)
