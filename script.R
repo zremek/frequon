@@ -44,7 +44,7 @@ join %>%
 join %>% mutate(diff_pct = cipher_letter_pct - eng_letter_pct) %>% 
   ggplot(aes(x = letter, y = diff_pct, fill = diff_pct > 0)) + geom_col()
 
-install.packages("ggpubr")
+
 library(ggpubr)
 eng_order <- join %>% ggplot() + 
   geom_point(aes(x = fct_reorder(.f = letter, .x = eng_letter_pct),
@@ -60,3 +60,23 @@ ggarrange(eng_order, cipher_order, nrow = 1, ncol = 2)
                              new = "etaoinshrdlcumwfgypbvkjxqz",
                              x = tolower(roses)))
 frequon(subject = "Re: Transcription", content = roses_translation)
+
+top100commonWords
+
+library(tm)
+corp_r_t <- Corpus(VectorSource(roses_translation))
+corp_r_t <- tm_map(corp_r_t, removePunctuation)
+corp_r_t <- tm_map(corp_r_t, stripWhitespace)
+dtm <- TermDocumentMatrix(corp_r_t)
+m <- as.matrix(dtm)
+v <- sort(rowSums(m),decreasing = TRUE)
+d <- data.frame(word = names(v),freq = v)
+d
+
+chartr(old = "ahknowldtbuceisrmpyvfjgzqx",
+       new = "hrknowdltbufeasimycvpxgzqj",
+       roses_translation)
+
+frequon(subject = "Re: Key",
+        content = c(old = "ahknowldtbuceisrpyv",
+                    new = "hrknowdltbufeasiycv"))
