@@ -78,5 +78,5 @@ chartr(old = "ahknowldtbuceisrmpyvfjgzqx",
        roses_translation)
 
 frequon(subject = "Re: Key",
-        content = c(old = "ahknowldtbuceisrpyv",
-                    new = "hrknowdltbufeasiycv"))
+        content = c(old = "ahknowldtbuceisrmpyvfjgzqx",
+                    new = "hrknowdltbufeasimycvpxgzqj"))
