@@ -76,7 +76,56 @@ d
 chartr(old = "ahknowldtbuceisrmpyvfjgzqx",
        new = "hrknowdltbufeasimycvpxgzqj",
        roses_translation)
+# translation from first iteration works
+
+# join translations
+
+old <- unlist(strsplit("ahknowldtbuceisrmpyvfjgzqx", ""))
+new <- unlist(strsplit("hrknowdltbufeasimycvpxgzqj", ""))
+
+df <- cbind.data.frame(r_t = old, new = new)
+
+original <- unlist(strsplit("peszlydctwoqfxharnjmgvibuk", ""))
+translation <- unlist(strsplit("etaoinshrdlcumwfgypbvkjxqz", ""))          
+
+tmp <- cbind.data.frame(org = original, r_t = translation)
+
+df <- left_join(df, tmp, by = "r_t")
+
+# answer
+df <- arrange(df, org)
+old <- as.character(df$org)
+old <- paste(old, sep = "", collapse = "")
+new <- paste(as.character(df$new), sep = "", collapse = "")
 
 frequon(subject = "Re: Key",
-        content = c(old = "ahknowldtbuceisrmpyvfjgzqx",
-                    new = "hrknowdltbufeasimycvpxgzqj"))
+        content = c(old = old,
+                    new = new))
+chartr(new, old, "guns and roses")
+
+BetaBit::lyo
+
+frequon(subject = "Re: Next text",
+        content = BetaBit::lyo)
+
+wiki <- BetaBit::wikiquotes
+
+lyo_split <- unlist(strsplit(x = lyo, split = " "))
+lyo_split <- data.frame(table(nchar(lyo_split)))
+lengths <- lyo_split$Freq
+names(lengths) <- lyo_split$Var1
+
+wiki_split <- lapply(wiki, function(x) unlist(strsplit(x = x, split = " ")))
+wiki_split <- lapply(wiki_split, function(x) data.frame(table(nchar(x))))
+wiki_lengths <- lapply(wiki_split, function(x) setNames(nm = x$Var1, object = x$Freq))
+
+frequon(subject = "Re: Lengths in the text", content = lengths, attachment = wiki_lengths)
+
+barplot(lengths, main = "lenghts")
+
+lapply(wiki_lengths, function(x) barplot(x))
+
+frequon(subject = "Re: Language in and message", content = "Romanian")
+
+frequon(subject = "Re: Password", content = pistoale)
+
